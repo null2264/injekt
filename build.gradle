@@ -175,27 +175,6 @@ subprojects {
     nexus {
         sign = true
     }
-
-    bintray {
-        user = "$bintrayUser"
-        key = "$bintrayKey"
-        pkg {
-            repo = 'kohesive'
-            name = project.name
-            licenses = ['MIT']
-            vcsUrl = 'scm:git:git@github.com:kohesive/injekt.git'
-
-            version {
-                name = project.version
-                desc = 'n/a'
-                released = new Date()
-            }
-            publicDownloadNumbers = false
-            configurations = ['archives']
-        }
-        publish = true
-        dryRun = false
-    }
 }
 
 task wrapper(type: Wrapper) {
