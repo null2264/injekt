@@ -43,8 +43,11 @@ open class DefaultRegistrar : InjektRegistrar {
         get<T>(forType) // load value into front cache
     }
 
+    @Suppress("UNCHECKED_CAST")
     override fun <R: Any> addSingletonFactory(forType: TypeReference<R>, factoryCalledOnce: () -> R) {
-        factories.put(forType.type, { existingValues.getOrPut(Instance(forType.type, NOKEY), { factoryCalledOnce() }) })
+        factories.put(forType.type, {
+            (existingValues.getOrPut(Instance(forType.type, NOKEY)) { lazy { factoryCalledOnce() } } as Lazy<R>).value
+        })
     }
 
     override fun <R: Any> addFactory(forType: TypeReference<R>, factoryCalledEveryTime: () -> R) {
@@ -165,4 +168,3 @@ open class DefaultRegistrar : InjektRegistrar {
 
 
 }
-
