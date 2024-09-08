@@ -4,25 +4,18 @@ import org.gradle.plugins.ide.idea.model.IdeaProject
 buildscript {
     repositories {
         mavenCentral()
-        jcenter()
         maven {
             url 'http://repo.spring.io/plugins-release'
         }
         maven {
             url 'http://oss.sonatype.org/content/repositories/snapshots'
         }
-        /* only during EAP builds
-        maven {
-            url 'http://dl.bintray.com/kotlin/kotlin-eap'
-        }
-        */
     }
     //noinspection GroovyAssignabilityCheck
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$version_kotlin"
         classpath "org.springframework.build.gradle:propdeps-plugin:0.0.7"
         classpath 'com.bmuschko:gradle-nexus-plugin:2.3.1'
-        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.4'
         // one day... classpath "org.jetbrains.dokka:dokka-gradle-plugin:0.1-SNAPSHOT"
     }
 }
@@ -79,11 +72,6 @@ subprojects {
         maven {
             url 'http://oss.sonatype.org/content/repositories/snapshots'
         }
-        /** only during EAP builds
-        maven {
-            url 'http://dl.bintray.com/kotlin/kotlin-eap'
-        }
-        */
     }
 
     dependencies {
@@ -116,7 +104,6 @@ subprojects {
 
 subprojects {
     apply plugin: 'com.bmuschko.nexus'
-    apply plugin: 'com.jfrog.bintray'
 
 
     def pomOnlyModule = !(new File("${projectDir.toString()}/src/main/kotlin").exists())
