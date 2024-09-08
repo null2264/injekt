@@ -5,25 +5,18 @@ buildscript {
     repositories {
         mavenCentral()
         maven {
-            url 'http://repo.spring.io/plugins-release'
-        }
-        maven {
             url 'http://oss.sonatype.org/content/repositories/snapshots'
         }
     }
     //noinspection GroovyAssignabilityCheck
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$version_kotlin"
-        classpath "org.springframework.build.gradle:propdeps-plugin:0.0.7"
         classpath 'com.bmuschko:gradle-nexus-plugin:2.3.1'
         // one day... classpath "org.jetbrains.dokka:dokka-gradle-plugin:0.1-SNAPSHOT"
     }
 }
 
 subprojects {
-    apply plugin: 'propdeps'
-    apply plugin: 'propdeps-maven'
-    apply plugin: 'propdeps-idea'
     apply plugin: 'java'
     apply plugin: 'kotlin'
 
@@ -71,6 +64,17 @@ subprojects {
         mavenCentral()
         maven {
             url 'http://oss.sonatype.org/content/repositories/snapshots'
+        }
+    }
+
+    configurations {
+        provided
+    }
+
+    sourceSets {
+        all {
+            compileClasspath += configurations.provided
+            runtimeClasspath += configurations.provided
         }
     }
 
